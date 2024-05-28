@@ -9,7 +9,7 @@ using namespace std;
 #define MAXDATA 100
 
 class Doibong {
-public:
+    public:
     string TenClb;
     Doibong(string TenClb = "") {
         this->TenClb = TenClb;
@@ -27,10 +27,9 @@ public:
 };
 
 class ThongTin : public Doibong {
-private:
     int VT, Tr, T, H, B, HS, BT, BB, BTSK, TV, TD, Diem;
+    public:
 
-public:
     ThongTin(int VT = 0, int Tr = 0, int T = 0, int H = 0, int B = 0, int BT = 0, int BB = 0, int HS = 0, int BTSK = 0, int TV = 0, int TD = 0, int Diem = 0, string TenClb = "") : Doibong(TenClb) {
         this->VT = VT;
         this->Tr = Tr;
@@ -64,27 +63,65 @@ public:
         Doibong::NhapTenClb();
         cout << "Nhap so tran: ";
         cin >> Tr;
+        while (Tr < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> Tr;
+        }
         cout << "Nhap so tran thang: ";
         cin >> T;
+        while (T < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> T;
+        }
         cout << "Nhap so tran hoa: ";
         cin >> H;
+        while (H < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> H;
+        }
         cout << "Nhap so tran thua: ";
         cin >> B;
+        while (B < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> B;
+        }
         cout << "Nhap so ban thang: ";
         cin >> BT;
+        while (BT < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> BT;
+        }
         cout << "Nhap so ban thua: ";
         cin >> BB;
+        while (BB < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> BB;
+        }
         cout << "Nhap so ban thang san khach: ";
         cin >> BTSK;
+        while (BTSK < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> BTSK;
+        }
         cout << "Nhap so the vang: ";
         cin >> TV;
+        while (TV < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> TV;
+        }
         cout << "Nhap so the do: ";
         cin >> TD;
+        while (TD < 0) {
+            cout << "Gia tri khong hop le, vui long nhap lai: ";
+            cin >> TD;
+        }
+        HS = BT - BB;
+        Diem = T * 3 + H;
     }
 
     void XuatThongTin() {
-    	cout << "+----+-------------------------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------+" << endl;
-    	cout << "| " << left << setw(4) << "VT" 
+        cout << "+----+-------------------------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------+" << endl;
+        cout << "| " << left << setw(4) << "VT" 
              << setw(33) << "TEN CLB" 
              << setw(6) << "Tr" 
              << setw(6) << "T" 
@@ -114,7 +151,8 @@ public:
              << setw(6) << Diem << endl;
         cout << "+----+-------------------------------+-----+-----+-----+-----+-----+----+-----+-----+------+-----+--------+" << endl;
     }
-    string toCSV() {
+
+    string Hamghifile() {
         stringstream ss;
         ss << VT << "," << TenClb << "," << Tr << "," << T << "," << H << "," << B << "," 
            << BT << "," << BB << "," << HS << "," << BTSK << "," << TV << "," << TD << "," << Diem;
@@ -129,22 +167,22 @@ public:
     QuanLiDuLieu() {
         soluong = 0;
     }
-
+    // Thêm dữ liệu
     void Them(ThongTin newData) {
         if (soluong < MAXDATA) {
             Data[soluong++] = newData;
-            SapXep(); // Gọi hàm sắp xếp sau khi thêm
+            SapXep();
         } else {
             cout << "So luong doi bong da day" << endl;
         }
     }
-
+    // Hiển thị thông tin
     void HienThi() {
         for (int i = 0; i < soluong; i++) {
             Data[i].XuatThongTin();
         }
     }
-
+    // Xuất dữ liệu ra màn hình
     void XuatBang() {
         cout << "+----+-------------------------------+-----+-----+-----+-----+-----+-----+-----+-----+-----+-----+--------+" << endl;
         cout << "| " << left << setw(4) << "VT" 
@@ -180,7 +218,7 @@ public:
         }
         cout << "+----+-------------------------------+-----+-----+-----+-----+-----+----+-----+-----+------+-----+--------+" << endl;
     }
-
+    // Hàm xóa dữ liệu
     void Xoa(int a) {
         if (a >= 0 && a < soluong) {
             for (int i = a; i < soluong - 1; i++) {
@@ -192,7 +230,7 @@ public:
             cout << "Nhap sai vi tri" << endl;
         }
     }
-
+    // Hàm sửa dữ liệu
     void Sua(int VT, ThongTin newData) {
         if (VT >= 0 && VT < soluong) {
             Data[VT] = newData;
@@ -201,7 +239,7 @@ public:
             cout << "Khong hop le" << endl;
         }
     }
-
+    // Tra cứu bằng vị trí
     void TracuuVT(int VT) {
         if (VT >= 0 && VT < soluong) {
             Data[VT].XuatThongTin();
@@ -209,10 +247,10 @@ public:
             cout << "Khong tim thay" << endl;
         }
     }
-
+    // Tra cứu bằng tên câu lạc bộ
     void TracuuTenClb(string TenClb){
         bool a = false;
-        for(int i = 0; i< soluong; i++){
+        for(int i = 0; i < soluong; i++){
             if(Data[i].getTenClb() == TenClb){
                 Data[i].XuatThongTin();
                 a = true;
@@ -222,83 +260,111 @@ public:
             cout << "Khong tim thay ten doi bong trong du lieu " << endl;
         }
     }
-    
-void DocFile(string filename) {
-    ifstream file(filename);
-    if (!file.is_open()) {
-        cout << "Khong the mo file " << filename << endl;
-        return;
+    // Tra cứu thông tin
+    void TracuuBXH(){
+        for(int i = 0; i < soluong; i++){
+            if(Data[i].getVT() == 1){
+                cout << "Cau lac bo duoc tham du AFC Champions League la: ";
+                cout << Data[i].getTenClb() << endl;
+            }
+            if(Data[i].getVT() == soluong - 1){
+                cout << "Cau lac bo tham gia da playoff xuong hang la: ";
+                cout << Data[i].getTenClb() << endl;
+            }
+            if(Data[i].getVT() == soluong){
+                cout << "Cau lac bo xuong hang la: ";
+                cout << Data[i].getTenClb() << endl;
+            }
+        }
     }
-    string line;
-    getline(file, line);
-
-    while (getline(file, line)) {
-        stringstream ss(line);
-        string TenClb;
-        int VT, Tr, T, H, B, HS, BTSK, TV, TD, Diem;
-        int BT, BB;
-        string temp;
-
-        getline(ss, temp, ','); VT = stoi(temp);
-        getline(ss, TenClb, ',');
-        getline(ss, temp, ','); Tr = stoi(temp);
-        getline(ss, temp, ','); T = stoi(temp);
-        getline(ss, temp, ','); H = stoi(temp);
-        getline(ss, temp, ','); B = stoi(temp);
-        getline(ss, temp, ','); BT = stoi(temp);
-        getline(ss, temp, ','); BB = stoi(temp);
-        HS = BT - BB;
-        getline(ss, temp, ',');
-        getline(ss, temp, ','); BTSK = stoi(temp);
-        getline(ss, temp, ','); TV = stoi(temp);
-        getline(ss, temp, ','); TD = stoi(temp);
-        getline(ss, temp, ','); Diem = stoi(temp);
-
-        ThongTin newData = ThongTin(VT, Tr, T, H, B, BT, BB, HS, BTSK, TV, TD, Diem, TenClb);
-        Them(newData);
+    // Thong ke bang xep hang
+    void ThongKe() {
+        int tongBT = 0, tongBB = 0, tongTV = 0, tongTD = 0;
+        for (int i = 0; i < soluong; i++) {
+            tongBT += Data[i].getBT();
+            tongBB += Data[i].getBB();
+            tongTV += Data[i].getTV();
+            tongTD += Data[i].getTD();
+        }
+        cout << "Tong so ban thang: " << tongBT << endl;
+        cout << "Tong so ban thua: " << tongBB << endl;
+        cout << "Tong so the vang: " << tongTV << endl;
+        cout << "Tong so the do: " << tongTD << endl;
     }
-    file.close();
-}
+    // Đọc file 
+    void DocFile(string filename) {
+        ifstream file(filename);
+        if (!file.is_open()) {
+            cout << "Khong the mo file " << filename << endl;
+            return;
+        }
+        string line;
+        getline(file, line);
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string TenClb;
+            int VT, Tr, T, H, B, HS, BTSK, TV, TD, Diem;
+            int BT, BB;
+            string a;
+            getline(ss, a, ','); VT = stoi(a);
+            getline(ss, TenClb, ',');
+            getline(ss, a, ','); Tr = stoi(a);
+            getline(ss, a, ','); T = stoi(a);
+            getline(ss, a, ','); H = stoi(a);
+            getline(ss, a, ','); B = stoi(a);
+            getline(ss, a, ','); BT = stoi(a);
+            getline(ss, a, ','); BB = stoi(a);
+            HS = BT - BB;
+            getline(ss, a, ',');
+            getline(ss, a, ','); BTSK = stoi(a);
+            getline(ss, a, ','); TV = stoi(a);
+            getline(ss, a, ','); TD = stoi(a);
+            Diem = T * 3 + H;
+            ThongTin newData = ThongTin(VT, Tr, T, H, B, BT, BB, HS, BTSK, TV, TD, Diem, TenClb);
+            Them(newData);
+        }
+        file.close();
+    }
+    // Hàm sắp xếp
     void SapXep() {
         for (int i = 0; i < soluong - 1; i++) {
             for (int j = 0; j < soluong - i - 1; j++) {
                 if (Data[j].getDiem() < Data[j + 1].getDiem() || 
                    (Data[j].getDiem() == Data[j + 1].getDiem() && Data[j].getHS() < Data[j + 1].getHS()) ||
-                   (Data[j].getDiem() == Data[j + 1].getDiem() && Data[j].getHS() == Data[j + 1].getHS() && Data[j].getBT() < Data[j + 1].getBT())) {
+                   (Data[j].getDiem() == Data[j + 1].getDiem() && Data[j].getHS() == Data[j + 1].getHS() && Data[j].getBT() < Data[j + 1].getBT()) ||
+                   (Data[j].getDiem() == Data[j + 1].getDiem() && Data[j].getHS() == Data[j + 1].getHS() && Data[j].getBT() == Data[j + 1].getBT() && Data[j].getBTSK() < Data[j + 1].getBTSK())) {
                     ThongTin temp = Data[j];
                     Data[j] = Data[j + 1];
                     Data[j + 1] = temp;
                 }
             }
         }
-
         for (int i = 0; i < soluong; i++) {
             Data[i].setVT(i + 1);
         }
     }
+    // Ghi file
     void GhiFile(string filename) {
         ofstream file(filename);
         if (!file.is_open()) {
             cout << "Khong the mo file " << filename << endl;
             return;
         }
-
         file << "VT,TenClb,Tr,T,H,B,BT,BB,HS,BTSK,TV,TD,Diem\n";
-
         for (int i = 0; i < soluong; i++) {
-        	if (Data[i].getVT() != 0) {
-            file << Data[i].toCSV() << endl;
-        }
-    }    
+            file << Data[i].Hamghifile() << endl;
+        }    
         file.close();
     }
 };
-
+// Class người dùng
 class User {
 public:
     QuanLiDuLieu* QuanLy;
-    User(QuanLiDuLieu* ql) : QuanLy(ql) {}
-    virtual void Menu() {
+    User(QuanLiDuLieu* QuanLy) : QuanLy(QuanLy) {}
+    // Hàm menu của người dùng
+    void Menu() {
+        cout << "BAN DANG XEM DU LIEU VOI TU CACH LA NGUOI DUNG" << endl;
         int n;
         do {
             cout << "+---------------------------------------------------+" << endl;
@@ -306,13 +372,13 @@ public:
             cout << "|---------------------------------------------------|" << endl;
             cout << "|             1. HIEN THI BANG XEP HANG             |" << endl;
             cout << "|             2. TIM KIEM DOI BONG                  |" << endl;
+            cout << "|             3. THONG KE BANG XEP HANG             |" << endl;
             cout << "|             0. THOAT CHUONG TRINH                 |" << endl;
             cout << "+---------------------------------------------------+" << endl;
             cout << endl;
             cout << "CHUC NANG BAN CHON: ";
             cin >> n;
             cin.ignore();
-
             switch (n) {
             case 1: {
                 cout << "BAN DA CHON CHUC NANG HIEN THI BANG XEP HANG " << endl;
@@ -321,11 +387,12 @@ public:
                 break;
             }
             case 2: {
-            int m;
+                int m;
                 do {
-                    cout << "1.Tim kiem bang vi tri" << endl;
-                    cout << "2.Tim kiem bang ten doi bong" << endl;
-                    cout << "0.Thoat chuc nang tim kiem" << endl;
+                    cout << "1. Tim kiem bang vi tri" << endl;
+                    cout << "2. Tim kiem bang ten doi bong" << endl;
+                    cout << "3. Tra cuu xep hang : Xuong hang, da playoff xuong hang, duoc tham du afc champion ship" << endl;
+                    cout << "0. Thoat chuc nang tim kiem" << endl;
                     cout << "Chuc nang ban muon chon: ";
                     cin >> m;
                     cin.ignore();
@@ -344,6 +411,11 @@ public:
                         cout << "Nhap ten doi bong ma ban muon tim kiem: ";
                         getline(cin, TenClb);
                         QuanLy->TracuuTenClb(TenClb);
+                        break;
+                    }
+                    case 3: {
+                        cout << "BAN DA CHON CHUC NANG TRA CUU NHUNG DOI XUONG HANG, PLAYOFF XUONG HANG, DUOC DU AFC CHAMPIONS LEAGUE" << endl;
+                        QuanLy->TracuuBXH();
                         break;
                     }
                     case 0: {
@@ -357,6 +429,11 @@ public:
                 } while (m != 0);
                 break;
             }
+            case 3: {
+                cout << "BAN DA CHON CHUC NANG THONG KE" << endl;
+                QuanLy->ThongKe();
+                break;
+            }
             case 0: {
                 return;
             }
@@ -367,27 +444,33 @@ public:
         } while (true);
     }
 };
-
+// Class người quản trị viên
 class Admin : public User {
 public:
-    Admin(QuanLiDuLieu* ql) : User(ql) {}
-	bool DangNhap() {
+    Admin(QuanLiDuLieu* QuanLy) : User(QuanLy) {}
+    bool DangNhap() {
         string tk, mk;
-        cout << "Nhap tai khoan: ";
-        getline(cin, tk);
-        cout << "Nhap mat khau: ";
-        getline(cin, mk);
-        // Tài khoản của admin là : admin Còn mật khẩu là admin123
-        return (tk == "admin" && mk == "admin123");
+        while (true) {
+            cout << "Nhap tai khoan (nhan 0 de thoat): ";
+            getline(cin, tk);
+            if (tk == "0") return false;
+            cout << "Nhap mat khau: ";
+            getline(cin, mk);
+            // Tài khoản của admin là : admin và mật khẩu là admin123
+            if (tk == "admin" && mk == "admin123") {
+                return true;
+            } else {
+                cout << "Tai khoan hoac mat khau sai. Vui long thu lai." << endl;
+            }
+        }
     }
-
+    // Hàm menu của quản trị viên
     void Menu() {
-    	if (!DangNhap()) {
-            cout << "Tai khoan hoac mat khau sai. Vui long thu lai." << endl;
+        if (!DangNhap()) {
             return;
         } else {
-        	cout << "BAN DANG QUAN LY DUOI DANH NGHIA ADMIN" << endl;
-		}
+            cout << "BAN DANG QUAN LY DUOI DANH NGHIA ADMIN" << endl;
+        }
         int n;
         do {
             cout << "+---------------------------------------------------+" << endl;
@@ -400,13 +483,13 @@ public:
             cout << "|             5. SUA DU LIEU                        |" << endl;
             cout << "|             6. GHI FILE                           |" << endl;
             cout << "|             7. DOC FILE                           |" << endl;
+            cout << "|             8. THONG KE BANG XEP HANG             |" << endl;
             cout << "|             0. THOAT CHUONG TRINH                 |" << endl;
             cout << "+---------------------------------------------------+" << endl;
             cout << endl;
             cout << "CHUC NANG BAN CHON: ";
             cin >> n;
             cin.ignore();
-
             switch (n) {
             case 1: {
                 cout << "BAN DA CHON CHUC NANG THEM DU LIEU" << endl;
@@ -417,39 +500,77 @@ public:
                 getline(cin, TenClb);
                 cout << "Nhap so tran: ";
                 cin >> Tr;
+                while (Tr < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> Tr;
+                }
                 cout << "Nhap so tran thang: ";
                 cin >> T;
+                while (T < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> T;
+                }
                 cout << "Nhap so tran hoa: ";
                 cin >> H;
+                while (H < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> H;
+                }
                 cout << "Nhap so tran thua: ";
                 cin >> B;
+                while (B < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> B;
+                }
                 cout << "Nhap so ban thang: ";
                 cin >> BT;
+                while (BT < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BT;
+                }
                 cout << "Nhap so ban thua: ";
                 cin >> BB;
+                while (BB < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BB;
+                }
                 cout << "Nhap so ban thang san khach: ";
                 cin >> BTSK;
+                while (BTSK < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BTSK;
+                }
                 cout << "Nhap so the vang: ";
                 cin >> TV;
+                while (TV < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> TV;
+                }
                 cout << "Nhap so the do: ";
                 cin >> TD;
+                while (TD < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> TD;
+                }
+                HS = BT - BB;
+                Diem = T * 3 + H;
                 ThongTin newData = ThongTin(VT, Tr, T, H, B, BT, BB, HS, BTSK, TV, TD, Diem, TenClb);
                 QuanLy->Them(newData);
                 cin.ignore();
                 break;
             }
             case 2: {
-            	cout << "BAN DA CHON CHUC NANG XUAT DU LIEU " << endl;
-        		cout << endl;
-            	QuanLy->XuatBang();
-            	break;
+                cout << "BAN DA CHON CHUC NANG XUAT DU LIEU " << endl;
+                QuanLy->XuatBang();
+                break;
             }
             case 3: {
                 int m;
                 do {
-                    cout << "1.Tim kiem bang vi tri" << endl;
-                    cout << "2.Tim kiem bang ten doi bong" << endl;
-                    cout << "0.Thoat chuc nang tim kiem" << endl;
+                    cout << "1. Tim kiem bang vi tri" << endl;
+                    cout << "2. Tim kiem bang ten doi bong" << endl;
+                    cout << "3. Tra cuu xep hang : Xuong hang, da playoff xuong hang, duoc tham du afc champion ship" << endl;
+                    cout << "0. Thoat chuc nang tim kiem" << endl;
                     cout << "Chuc nang ban muon chon: ";
                     cin >> m;
                     cin.ignore();
@@ -468,6 +589,11 @@ public:
                         cout << "Nhap ten doi bong ma ban muon tim kiem: ";
                         getline(cin, TenClb);
                         QuanLy->TracuuTenClb(TenClb);
+                        break;
+                    }
+                    case 3: {
+                        cout << "BAN DA CHON CHUC NANG TRA CUU NHUNG DOI XUONG HANG, PLAYOFF XUONG HANG, DUOC DU AFC CHAMPIONS LEAGUE" << endl;
+                        QuanLy->TracuuBXH();
                         break;
                     }
                     case 0: {
@@ -502,24 +628,62 @@ public:
                 getline(cin, TenClb);
                 cout << "Nhap so tran: ";
                 cin >> Tr;
+                while (Tr < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> Tr;
+                }
                 cout << "Nhap so tran thang: ";
                 cin >> T;
+                while (T < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> T;
+                }
                 cout << "Nhap so tran hoa: ";
                 cin >> H;
+                while (H < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> H;
+                }
                 cout << "Nhap so tran thua: ";
                 cin >> B;
+                while (B < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> B;
+                }
                 cout << "Nhap so ban thang: ";
                 cin >> BT;
+                while (BT < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BT;
+                }
                 cout << "Nhap so ban thua: ";
                 cin >> BB;
+                while (BB < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BB;
+                }
                 cout << "Nhap so ban thang san khach: ";
                 cin >> BTSK;
+                while (BTSK < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> BTSK;
+                }
                 cout << "Nhap so the vang: ";
                 cin >> TV;
+                while (TV < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> TV;
+                }
                 cout << "Nhap so the do: ";
                 cin >> TD;
+                while (TD < 0) {
+                    cout << "Gia tri khong hop le, vui long nhap lai: ";
+                    cin >> TD;
+                }
+                HS = BT - BB;
+                Diem = T * 3 + H;
                 ThongTin newData = ThongTin(VT, Tr, T, H, B, BT, BB, HS, BTSK, TV, TD, Diem, TenClb);
-                QuanLy->Sua(VT, newData);
+                QuanLy->Sua(VT - 1, newData);
                 break;
             }
             case 6: {
@@ -534,22 +698,26 @@ public:
                 cout << "DU LIEU DA DUOC DOC " << endl;
                 break;
             }
+            case 8: {
+                cout << "BAN DA CHON CHUC NANG THONG KE" << endl;
+                QuanLy->ThongKe();
+                break;
+            }
             case 0: {
                 return;
             }
             default: {
                 cout << "BAN DA NHAP SAI LENH VUI LONG NHAP LAI" << endl;
-            }
-            }
+            } 
+        }
         } while (true);
     }
 };
-				
 
 int main() {
     QuanLiDuLieu QuanLy;
+    cout << "DU AN QUAN LY DU LIEU CRAWL TU WEBSITE - NHOM 23 - HOANG NGHIA HOA - PHAM THI HONG NHUNG" << endl;
     int a;
-
     cout << "+---------------------------------------------------+" << endl;
     cout << "|                DANG NHAP                          |" << endl;
     cout << "|---------------------------------------------------|" << endl;
@@ -559,7 +727,6 @@ int main() {
     cout << "CHUC NANG BAN CHON: ";
     cin >> a;
     cin.ignore();
-
     if (a == 1) {
         Admin admin(&QuanLy);
         admin.Menu();
