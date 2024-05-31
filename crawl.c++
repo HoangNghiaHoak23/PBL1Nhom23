@@ -724,17 +724,24 @@ int main() {
     cout << "|               1. ADMIN                            |" << endl;
     cout << "|               2. USER                             |" << endl;
     cout << "+---------------------------------------------------+" << endl;
+    do{
     cout << "CHUC NANG BAN CHON: ";
     cin >> a;
     cin.ignore();
-    if (a == 1) {
+    switch(a){
+        case 1: {
         Admin admin(&QuanLy);
         admin.Menu();
-    } else if (a == 2) {
+        break;
+        }
+    case 2: {
         User user(&QuanLy);
         user.Menu();
-    } else {
+        break;
+    }
+    default: {
         cout << "BAN DA NHAP SAI LENH VUI LONG NHAP LAI" << endl;
     }
+    }} while(true);
     return 0;
 }
